@@ -1,0 +1,8 @@
+/home/felipe/Geant4/dev/piramide/build/CMakeFiles/install/strip.dir
+/home/felipe/Geant4/dev/piramide/build/CMakeFiles/install/local.dir
+/home/felipe/Geant4/dev/piramide/build/CMakeFiles/Filtro.dir
+/home/felipe/Geant4/dev/piramide/build/CMakeFiles/filtro.dir
+/home/felipe/Geant4/dev/piramide/build/CMakeFiles/list_install_components.dir
+/home/felipe/Geant4/dev/piramide/build/CMakeFiles/edit_cache.dir
+/home/felipe/Geant4/dev/piramide/build/CMakeFiles/rebuild_cache.dir
+/home/felipe/Geant4/dev/piramide/build/CMakeFiles/install.dir

@@ -60,10 +60,15 @@ Filtro_DetectorConstruction::Filtro_DetectorConstruction (G4double RIndex)
     world_z     = 2 * (piramide_z);
 
 
+    // Base
+    base_x       = piramide_x;
+    base_y       = piramide_y;
+    base_z       = 6 * m * 0.5;   
+
     // Detector
-    detector_x       = piramide_x;
-    detector_y       = piramide_y;
-    detector_z       = 1 * mm * 0.5;
+    detector_x       = 2 * m * 0.5;
+    detector_y       = 2 * m * 0.5;
+    detector_z       = 2 * m * 0.5;
 
 }
 
@@ -131,15 +136,25 @@ G4VPhysicalVolume* Filtro_DetectorConstruction::DefineVolumes() {
     G4VPhysicalVolume* 	piramide_PV 	=  	new G4PVPlacement (0, G4ThreeVector(), piramide_LV, "piramide_LV", world_LV, true, 0, fCheckOverlaps);
 
 
+//===================== Base ======================
+
+    G4ThreeVector       pos_base        =       G4ThreeVector(0*cm, 0*cm, -(piramide_z + base_z) );
+
+    G4Box*              base            =   new G4Box("base", base_x, base_y, base_z); 
+   
+    G4LogicalVolume*    base_LV         =   new G4LogicalVolume (base, CONCRETE, "detector_LV");
+
+    G4VPhysicalVolume*  base_PV         =   new G4PVPlacement (NULL,  pos_base, base_LV, "base_LV",  world_LV, true, 0, fCheckOverlaps);
+
 //===================== Detector ======================
 
-    G4ThreeVector 		pos_detector 	= 	    G4ThreeVector(0*cm, 0*cm, -(30*m + detector_z) );
+    G4ThreeVector       pos_detector    =       G4ThreeVector(0*cm, 0*cm, 0*cm);//-(piramide_z + base_z + detector_z + 1 * m) );
 
-    G4Box* 				detector 		= 	new G4Box("detector", detector_x, detector_y, detector_z); 
+    G4Box*              detector        =   new G4Box("detector", detector_x, detector_y, detector_z); 
    
-    G4LogicalVolume* 	detector_LV		= 	new G4LogicalVolume (detector, CONCRETE, "detector_LV");
+    G4LogicalVolume*    detector_LV     =   new G4LogicalVolume (detector, CONCRETE, "detector_LV");
 
-    G4VPhysicalVolume* 	detector_PV 	= 	new G4PVPlacement (NULL,  pos_detector, detector_LV, "detector_LV",  world_LV, true, 0, fCheckOverlaps);
+    G4VPhysicalVolume*  detector_PV     =   new G4PVPlacement (NULL,  pos_detector, detector_LV, "detector_LV",  base_LV, true, 0, fCheckOverlaps);
 
 
 //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Visualization Attributes %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

@@ -39,9 +39,9 @@ Filtro_PrimaryGeneratorAction::~Filtro_PrimaryGeneratorAction() {
 
 void Filtro_PrimaryGeneratorAction::GeneratePrimaries(G4Event* anEvent) { 
     
-    G4double ran_x  = 100.0 * (G4UniformRand()-0.5) * m;
-    G4double ran_y  = 100.0 * (G4UniformRand()-0.5) * m;
-    G4double pos_z  = 59.0 * m;
+    G4double ran_x  = 1.0 * (G4UniformRand()-0.5) * m;
+    G4double ran_y  = 1.0 * (G4UniformRand()-0.5) * m;
+    G4double pos_z  = -10.0 * m;
     G4double energ  = 20 * GeV;
 
     particleGun->SetParticleTime(0.*ns);

@@ -32,6 +32,9 @@ class Filtro_DetectorConstruction : public G4VUserDetectorConstruction
     // detector
     G4double detector_x, detector_y, detector_z;
 
+    // detector
+    G4double base_x, base_y, base_z;
+
     G4bool  fCheckOverlaps; 
     G4double Refr_Index;
 

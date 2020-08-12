@@ -40,15 +40,18 @@ int main(int argc,char** argv) {
 
     G4MTRunManager* runManager = new G4MTRunManager;
     runManager->SetNumberOfThreads(7);
+    runManager->SetVerboseLevel(0);
 
     Filtro_DetectorConstruction* detConstruction = new Filtro_DetectorConstruction(RIndex);
     runManager->SetUserInitialization(detConstruction);
 
     G4VModularPhysicsList* physicsList = new FTFP_BERT;
     physicsList->ReplacePhysics(new G4EmStandardPhysics_option1());
-    G4OpticalPhysics* opticalPhysics = new G4OpticalPhysics();
 
+    G4OpticalPhysics* opticalPhysics = new G4OpticalPhysics();
     physicsList->RegisterPhysics(opticalPhysics);
+
+    physicsList->SetVerboseLevel(0);
     runManager->SetUserInitialization(physicsList);
 
 
@@ -61,6 +64,7 @@ int main(int argc,char** argv) {
 
 // visualization manager
     G4VisManager* visManager = new G4VisExecutive;
+    visManager->SetVerboseLevel(0);
     visManager->Initialize();
 
 // Initialize G4 kernel

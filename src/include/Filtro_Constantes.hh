@@ -8,7 +8,7 @@
 # define RAIO_CM 1.0 * cm
 
 // PRINT_FILE - 1 = imprime informacoes no arquivo TXT_FILE; 0 = nao faz nada
-#define PRINT_FILE 1
+#define PRINT_FILE 0
 
 // TXT_FILE - nome do arquivo no qual sera impresso dimensoes e eficiencia
 #define TXT_FILE "FiltroOutPut.txt"

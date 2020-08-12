@@ -64,6 +64,9 @@ void Filtro_RunAction::BeginOfRunAction(const G4Run* aRun) {
     analysisManager->CreateNtupleDColumn("z");
     analysisManager->CreateNtupleDColumn("t");
     analysisManager->CreateNtupleDColumn("energy");
+    analysisManager->CreateNtupleDColumn("dx");
+    analysisManager->CreateNtupleDColumn("dy");
+    analysisManager->CreateNtupleDColumn("dz");
     analysisManager->FinishNtuple();
 
 }
@@ -73,22 +76,6 @@ void Filtro_RunAction::BeginOfRunAction(const G4Run* aRun) {
 void Filtro_RunAction::EndOfRunAction(const G4Run* aRun) {
     G4cout << "End of run." << G4endl;
     timer->Stop();
-    G4cout << "Eficiency = " 				<< (G4double)nOfDetections_Total / aRun->GetNumberOfEvent() << G4endl;
-    G4cout << "Eficiency_DIR= "				<< (G4double)nOfDetections_dir / aRun->GetNumberOfEvent() << G4endl;
-    G4cout << "Eficiency_BAR= " 			<< (G4double)nOfDetections_bar / aRun->GetNumberOfEvent() << G4endl;
-    G4cout << "Eficiency_ARAPUCA = " 		<< (G4double)nOfDetections_ara / aRun->GetNumberOfEvent() << G4endl;
-    G4cout << "Average Time of flight = "   << (G4double)TOF_Detections_Total / (G4double)nOfDetections_Total   << " ns" << G4endl;
-    G4cout << "Number of event = " 			<< aRun->GetNumberOfEvent() << G4endl;
-
-
-    if (PRINT_FILE == 1) {
-	std::ofstream OutPut;
-
-	OutPut.open(TXT_FILE, std::ios::app);
-        //OutPut<<"Eficiency: " <<(G4double)nOfDetections_Total / aRun->GetNumberOfEvent()<<endl<<endl;
-        OutPut<< setprecision(4) << fixed << (G4double)nOfDetections_Total / aRun->GetNumberOfEvent()<<endl;
-	OutPut.close();
-    }
 
     G4AnalysisManager* analysisManager = G4AnalysisManager::Instance();
     analysisManager->Write();

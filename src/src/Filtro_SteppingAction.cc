@@ -55,9 +55,9 @@ void Filtro_SteppingAction::UserSteppingAction (const G4Step* aStep) {
     G4double step_y 	= 	aStep->GetTrack()->GetPosition().y();
     G4double step_z 	= 	aStep->GetTrack()->GetPosition().z();
 
-    G4double direction_x = aStep->GetDeltaPosition().x();
-    G4double direction_y = aStep->GetDeltaPosition().y();
-    G4double direction_z = aStep->GetDeltaPosition().z();
+    G4double direction_x = track->GetMomentumDirection().getX();
+    G4double direction_y = track->GetMomentumDirection().getY();
+    G4double direction_z = track->GetMomentumDirection().getZ();
 
     G4AnalysisManager* analysisManager = G4AnalysisManager::Instance();
     

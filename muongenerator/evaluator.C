@@ -185,7 +185,7 @@ void evaluator()
 	//*********************************************************************************
 	
 
-	TH1D* Frente = new TH1D("Distribuicao angular", "Distribuicao angular", 200, 0, 100);
+	TH1I* Frente = new TH1I("Distribuicao angular", "Distribuicao angular", 100, 0, 99);
 	
 	Int_t bin = 0;
 	Int_t number_of_bins = Frente->GetSize();
@@ -198,11 +198,15 @@ void evaluator()
 
 	for (int i = 0; i < number_of_bins; ++i)
 	{
-		TH1D *h = new TH1D(Form("Detected energy spectrum for the bin number %d", i), Form("Detected energy spectrum for the bin number %d", i), 10000, 0, 200); 
+		TH1D *h = new TH1D(Form("Detected momentum spectrum for %d degrees", (int)Frente->GetBinCenter(i)), Form("Detected momentum spectrum for %d degrees", (int)Frente->GetBinCenter(i)), 10000, 0, 200); 
 
 		h->GetXaxis()->SetTitle("Energy (GeV)");
 		h->GetYaxis()->SetTitle("entries");
 		h->SetLineWidth(3);
+		h->SetLineColor(1);
+		h->SetMarkerColor(2);
+		h->SetMarkerStyle(20);
+		h->SetLineColor(1);
 
 		EnergyDist.push_back(h); 
 	}
@@ -220,15 +224,14 @@ void evaluator()
 
 	TCanvas *C_Frente = new TCanvas("C_Frente", "Parede frontal",0,0,1800,900);
 	C_Frente->cd();
-	gPad->SetRightMargin(.45);	
+	// gPad->SetRightMargin(.45);	
 
-	Frente->SetTitle("Mean energy of the muons at the pyramid base");
-	Frente->GetXaxis()->SetTitle("Distance (m)");
-	Frente->GetYaxis()->SetTitle("Distance (m)");
-	Frente->GetZaxis()->SetTitle("Mean energy (GeV)");
-	Frente->GetZaxis()->SetTitleOffset(1);
-	Frente->SetLineWidth(1);
-	Frente->Draw("colz");
+	Frente->SetTitle("");
+	Frente->GetXaxis()->SetTitle("Angle (degrees)");
+	Frente->GetYaxis()->SetTitle("Entries");
+	Frente->SetLineColor(1);
+	Frente->SetLineWidth(3);
+	Frente->Draw("");
 
 	C_Frente->Update();
 
@@ -251,22 +254,22 @@ void Highlight2(TVirtualPad *pad, TObject *obj, Int_t xhb, Int_t yhb)
 
 	auto CanvasProj = (TCanvas *) gROOT->GetListOfCanvases()->FindObject("CanvasProj");
 
-	// gStyle->SetOptFit(0011);
+	gStyle->SetOptFit(0000);
 
 	if (!CanvasProj) 
 	{
 		TCanvas *CanvasProj = new TCanvas("CanvasProj", "CanvasProj", 0, 0, 800, 800);
 		CanvasProj->cd();
-		EnergyDist[F->GetBin(xhb)]->SetTitle(Form("Detected energy spectrum for %.1lf degrees", F->GetBinCenter(F->GetBin(xhb))));
-		EnergyDist[F->GetBin(xhb)]->Draw("");
+		EnergyDist[F->GetBin(xhb)]->SetTitle(Form("Detected momentum spectrum for %d degrees", (int)F->GetBinCenter(F->GetBin(xhb))));
+		EnergyDist[F->GetBin(xhb)]->Draw("E");
 
 	}
+
 	else
 	{
 		CanvasProj->cd();
-		// CanvasProj->SetLogy();
-		EnergyDist[F->GetBin(xhb)]->SetTitle(Form("histogram of detected energy for the binX %.1lf degrees", F->GetBinCenter(F->GetBin(xhb))));
-		EnergyDist[F->GetBin(xhb)]->Draw("");
+		EnergyDist[F->GetBin(xhb)]->SetTitle(Form("Detected momentum spectrum for %d degrees", (int)F->GetBinCenter(F->GetBin(xhb))));
+		EnergyDist[F->GetBin(xhb)]->Draw("E");
 		
 		CanvasProj->Update();
 	}
@@ -279,6 +282,4 @@ void Highlight2(TVirtualPad *pad, TObject *obj, Int_t xhb, Int_t yhb)
 
 	gPad-> SetLogx();
 	gPad-> SetLogy();
-
-
 }

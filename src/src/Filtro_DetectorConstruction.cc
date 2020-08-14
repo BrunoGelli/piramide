@@ -55,9 +55,9 @@ Filtro_DetectorConstruction::Filtro_DetectorConstruction (G4double RIndex)
 
 
     // World
-    world_x     = 2 * (piramide_x);
-    world_y     = 2 * (piramide_y);
-    world_z     = 2 * (piramide_z);
+    world_x     = 3 * (piramide_x);
+    world_y     = 3 * (piramide_y);
+    world_z     = 3 * (piramide_z);
 
 
     // Base

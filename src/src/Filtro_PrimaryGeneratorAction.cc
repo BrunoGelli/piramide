@@ -2,6 +2,7 @@
 #include "Filtro_Constantes.hh"
 
 #include "Randomize.hh"
+#include <G4INCLThreeVector.hh>
 
 #include "G4Event.hh"
 #include "G4ParticleGun.hh"
@@ -23,7 +24,7 @@ Filtro_PrimaryGeneratorAction::Filtro_PrimaryGeneratorAction() {
     particleGun->SetParticleEnergy(15*GeV);
     
     G4ParticleTable* particleTable = G4ParticleTable::GetParticleTable();
-    particleGun->SetParticleDefinition(particleTable->FindParticle("mu-"));
+    particleGun->SetParticleDefinition(particleTable->FindParticle("geantino"));
    
 }
 
@@ -39,16 +40,36 @@ Filtro_PrimaryGeneratorAction::~Filtro_PrimaryGeneratorAction() {
 
 void Filtro_PrimaryGeneratorAction::GeneratePrimaries(G4Event* anEvent) { 
     
-    G4double ran_x  = 1.0 * (G4UniformRand()-0.5) * m;
-    G4double ran_y  = 1.0 * (G4UniformRand()-0.5) * m;
-    G4double pos_z  = -10.0 * m;
-    G4double energ  = 20 * GeV;
+	G4double Zenith = 0;
+    G4double ZenithSelector  = G4UniformRand() * 100;
+
+    for (int i = 1; i < 9; ++i)
+    {
+    	if(AngleProb[i-1] <= ZenithSelector && AngleProb[i] > ZenithSelector)
+    	{
+    		Zenith = Angle[i]*3.1415/180;
+    		break;
+    	}
+    }
+	G4double theta = G4UniformRand()*2*3.1415;
+
+    G4double raio  = 100.0;
+
+    G4ThreeVector position = G4ThreeVector(raio*sin(Zenith)*cos(theta)*m, raio*sin(Zenith)*sin(theta)*m, (raio*cos(Zenith) - 33)*m);
+    // const G4ThreeVector detector = G4ThreeVector(0*m, 0*m, -33*m);
+
+
 
     particleGun->SetParticleTime(0.*ns);
  
-    particleGun->SetParticlePosition(G4ThreeVector(ran_x,ran_y, pos_z));
+    particleGun->SetParticlePosition(position);
 
-    particleGun->SetParticleMomentumDirection(G4ThreeVector(0, 0, -1)); 
+	position.setZ( position.getZ() + 33*m);
+
+    particleGun->SetParticleMomentumDirection(position.operator-()); 
+
+
+    G4double energ  = 2000000 * MeV;
 
     particleGun->SetParticleEnergy (energ);
 
@@ -208,3 +229,4 @@ the muon flux depending on the zenith is as described bellow.
     6.51681e+1, 8.69943e-10
     1.05818e+2, 2.46761e-10
 
+*/	

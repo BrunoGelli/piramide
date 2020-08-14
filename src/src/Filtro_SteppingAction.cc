@@ -85,22 +85,22 @@ void Filtro_SteppingAction::UserSteppingAction (const G4Step* aStep) {
 
     // cout << ultimo << " " << material << " " << PreVolName << " "  << PostVolName << " " << kinEnergy << " " << fEventNumber << endl;
 
-   	if (particle != "mu-")
-   	{
-		track->SetTrackStatus(fStopAndKill);
-   	}
+  //  	if (particle != "mu-")
+  //  	{
+		// track->SetTrackStatus(fStopAndKill);
+  //  	}
 
-   	if (particle == "mu-" && PostVolName == "detector_LV")
+   	if (particle == "geantino" && PostVolName == "detector_LV")
    	{
 		analysisManager->FillNtupleIColumn(1,0,fEventNumber);
 		analysisManager->FillNtupleDColumn(1,1,step_x/m);
 		analysisManager->FillNtupleDColumn(1,2,step_y/m);
 		analysisManager->FillNtupleDColumn(1,3,step_z/m);
-    analysisManager->FillNtupleDColumn(1,4,track->GetGlobalTime()/ns);
-    analysisManager->FillNtupleDColumn(1,5,kinEnergy/GeV);
-    analysisManager->FillNtupleDColumn(1,6,direction_x);
-    analysisManager->FillNtupleDColumn(1,7,direction_y);
-    analysisManager->FillNtupleDColumn(1,8,direction_z);
+		analysisManager->FillNtupleDColumn(1,4,track->GetGlobalTime()/ns);
+		analysisManager->FillNtupleDColumn(1,5,kinEnergy/GeV);
+		analysisManager->FillNtupleDColumn(1,6,direction_x);
+		analysisManager->FillNtupleDColumn(1,7,direction_y);
+		analysisManager->FillNtupleDColumn(1,8,direction_z);
 		analysisManager->AddNtupleRow(1);
 
 		track->SetTrackStatus(fStopAndKill);

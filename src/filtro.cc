@@ -1,4 +1,4 @@
-// #include "G4MTRunManager.hh"
+#include "G4MTRunManager.hh"
 #include "G4RunManager.hh"
 #include "G4UImanager.hh"
 
@@ -39,8 +39,8 @@ int main(int argc,char** argv) {
         RIndex = atof(argv [2]);
     }
 
-    G4RunManager* runManager = new G4RunManager;
-    // runManager->SetNumberOfThreads(7);
+    G4MTRunManager* runManager = new G4MTRunManager;
+    runManager->SetNumberOfThreads(7);
     runManager->SetVerboseLevel(0);
 
     Filtro_DetectorConstruction* detConstruction = new Filtro_DetectorConstruction(RIndex);

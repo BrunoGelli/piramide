@@ -64,6 +64,7 @@ void Filtro_RunAction::BeginOfRunAction(const G4Run* aRun) {
     analysisManager->CreateNtupleDColumn("z");
     analysisManager->CreateNtupleDColumn("t");
     analysisManager->CreateNtupleDColumn("energy");
+    analysisManager->CreateNtupleDColumn("theta");
     analysisManager->CreateNtupleDColumn("dx");
     analysisManager->CreateNtupleDColumn("dy");
     analysisManager->CreateNtupleDColumn("dz");

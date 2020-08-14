@@ -43,10 +43,10 @@ RM = /usr/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/theoden/geant_codigos/piramide/piramide/src
+CMAKE_SOURCE_DIR = /home/felipe/Geant4/dev/piramide/src
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/theoden/geant_codigos/piramide/piramide/build
+CMAKE_BINARY_DIR = /home/felipe/Geant4/dev/piramide/build
 
 # Utility rule file for Filtro.
 
@@ -71,6 +71,6 @@ CMakeFiles/Filtro.dir/clean:
 .PHONY : CMakeFiles/Filtro.dir/clean
 
 CMakeFiles/Filtro.dir/depend:
-	cd /home/theoden/geant_codigos/piramide/piramide/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/theoden/geant_codigos/piramide/piramide/src /home/theoden/geant_codigos/piramide/piramide/src /home/theoden/geant_codigos/piramide/piramide/build /home/theoden/geant_codigos/piramide/piramide/build /home/theoden/geant_codigos/piramide/piramide/build/CMakeFiles/Filtro.dir/DependInfo.cmake --color=$(COLOR)
+	cd /home/felipe/Geant4/dev/piramide/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/felipe/Geant4/dev/piramide/src /home/felipe/Geant4/dev/piramide/src /home/felipe/Geant4/dev/piramide/build /home/felipe/Geant4/dev/piramide/build /home/felipe/Geant4/dev/piramide/build/CMakeFiles/Filtro.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : CMakeFiles/Filtro.dir/depend
 

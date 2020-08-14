@@ -47,48 +47,56 @@ void Filtro_SteppingAction::UserSteppingAction (const G4Step* aStep) {
     //============================================================================
 
     
-    // Step
-    G4Track* track 		= 	aStep->GetTrack();
-    G4String particle  	=	track->GetDefinition()->GetParticleName();
-    G4String material 	=	track->GetMaterial()->GetName();
-    G4double step_x 	= 	aStep->GetTrack()->GetPosition().x();
-    G4double step_y 	= 	aStep->GetTrack()->GetPosition().y();
-    G4double step_z 	= 	aStep->GetTrack()->GetPosition().z();
+    // 	Here we are obtaining several informations from the particle
 
-    G4double direction_x = track->GetMomentumDirection().getX();
-    G4double direction_y = track->GetMomentumDirection().getY();
-    G4double direction_z = track->GetMomentumDirection().getZ();
+    G4Track* 		track 			= 	aStep->GetTrack();
+    G4String 		particle  		=	track->GetDefinition()->GetParticleName();
+    G4String 		material 		=	track->GetMaterial()->GetName();
+    G4double 		step_x 			= 	aStep->GetTrack()->GetPosition().x();
+    G4double 		step_y 			= 	aStep->GetTrack()->GetPosition().y();
+    G4double 		step_z 			= 	aStep->GetTrack()->GetPosition().z();
+
+    G4ThreeVector 	direction 		= 	track->GetMomentumDirection();
+
+    G4double 		direction_x 	= 	direction.getX();
+    G4double 		direction_y 	= 	direction.getY();
+    G4double 		direction_z 	= 	direction.getZ();
+
+	G4ThreeVector 	Normal	 		= 	G4ThreeVector(0 * m, 0 * m, -1 * m);
+
+	G4double		CosAngle		= 	direction.dot(Normal)/(direction.mag()*Normal.mag());
+
+    // 	Calling the Analysis Manager to store the data onto histograms
 
     G4AnalysisManager* analysisManager = G4AnalysisManager::Instance();
     
-    //PreStep Info
-    // G4StepPoint 		*aPrePoint 	= aStep->GetPreStepPoint();
-    // G4VPhysicalVolume 	*aPrePV 	= aPrePoint->GetPhysicalVolume();
-    // G4String 			PreVolName	= "";
+    //	PreStep Info
+    // 	G4StepPoint 		*aPrePoint 	= aStep->GetPreStepPoint();
+    // 	G4VPhysicalVolume 	*aPrePV 	= aPrePoint->GetPhysicalVolume();
+    // 	G4String 			PreVolName	= "";
 
-    // if (aPrePV) PreVolName = aPrePV->GetName();
+    // 	if (aPrePV) PreVolName = aPrePV->GetName();
     
-    //PostStep Info
+    //	Getting the information from the poststep Info
+
     G4StepPoint 		*aPostPoint = aStep->GetPostStepPoint();
     G4VPhysicalVolume 	*aPostPV 	= aPostPoint->GetPhysicalVolume();
     G4String 			PostVolName = "";
 
     if (aPostPV) PostVolName= aPostPV->GetName();
     
-    // energy
-	// From the track you can obtain the pointer to the dynamic particle:
-	// The dynamic particle class contains e.g. the kinetic energy after the step:
+	// 	From the track you can obtain the pointer to the dynamic particle:
+	// 	The dynamic particle class contains e.g. the kinetic energy after the step:
 	
-    const G4DynamicParticle	*dynParticle 	 = track->GetDynamicParticle();
-    G4double 				         kinEnergy 		 = dynParticle->GetKineticEnergy();
-    // G4TrackStatus 			     ultimo 			 = aStep->GetTrack()->GetTrackStatus();
+    const 	G4DynamicParticle		*dynParticle 	 = track->GetDynamicParticle();
+    		G4double 				 kinEnergy 		 = dynParticle->GetKineticEnergy();
+    // 		G4TrackStatus 			 ultimo 		 = aStep->GetTrack()->GetTrackStatus();
 
-    // cout << ultimo << " " << material << " " << PreVolName << " "  << PostVolName << " " << kinEnergy << " " << fEventNumber << endl;
 
-  //  	if (particle != "mu-")
-  //  	{
-		// track->SetTrackStatus(fStopAndKill);
-  //  	}
+	//  	if (particle != "mu-")
+	//  	{
+	// 			track->SetTrackStatus(fStopAndKill);
+	//  	}
 
    	if (particle == "geantino" && PostVolName == "detector_LV")
    	{
@@ -98,18 +106,19 @@ void Filtro_SteppingAction::UserSteppingAction (const G4Step* aStep) {
 		analysisManager->FillNtupleDColumn(1,3,step_z/m);
 		analysisManager->FillNtupleDColumn(1,4,track->GetGlobalTime()/ns);
 		analysisManager->FillNtupleDColumn(1,5,kinEnergy/GeV);
-		analysisManager->FillNtupleDColumn(1,6,direction_x);
-		analysisManager->FillNtupleDColumn(1,7,direction_y);
-		analysisManager->FillNtupleDColumn(1,8,direction_z);
+		analysisManager->FillNtupleDColumn(1,6,acos(CosAngle)*180/3.1415);
+		analysisManager->FillNtupleDColumn(1,7,direction_x);
+		analysisManager->FillNtupleDColumn(1,8,direction_y);
+		analysisManager->FillNtupleDColumn(1,9,direction_z);
 		analysisManager->AddNtupleRow(1);
 
 		track->SetTrackStatus(fStopAndKill);
    		
-   		if ((fEventNumber%1000 == 0 && fEventNumber > 999) ||  fEventNumber == 0)
+   		if ((fEventNumber%10000 == 0 && fEventNumber > 9999) ||  fEventNumber == 0)
 	   	{
-		    cout << "Rodando evento número: "<< fEventNumber << endl;
-        // cout << "Rodando evento número: "<< fEventNumber << " " << ultimo << " " << particle << " " << PreVolName << " "  << PostVolName << " " << kinEnergy << " " << fEventNumber << endl;
-        cout << "Rodando evento número: "<< fEventNumber << " " << particle << " "  << PostVolName << " " << kinEnergy << endl;
+			// cout << "Rodando evento número: "<< fEventNumber << endl;
+			// cout << "Rodando evento número: "<< fEventNumber << " " << ultimo << " " << particle << " " << PreVolName << " "  << PostVolName << " " << kinEnergy << " " << fEventNumber << endl;
+			cout << "Rodando evento número: "<< fEventNumber << " " << particle << " "  << PostVolName << " " << kinEnergy << endl;
    		}
 
    	}

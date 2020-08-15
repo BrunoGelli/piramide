@@ -27,8 +27,8 @@ void evaluator()
 
     gStyle->SetPadTickX(1);
     gStyle->SetPadTickY(1);
-    gStyle->SetPadGridX(1);
-    gStyle->SetPadGridY(1);
+    gStyle->SetPadGridX(0);
+    gStyle->SetPadGridY(0);
 	gStyle->SetStatY(0.9);
 	gStyle->SetStatX(0.95);
 	gStyle->SetStatW(0.3);
@@ -206,7 +206,13 @@ void evaluator()
 		h->SetLineColor(1);
 		h->SetMarkerColor(2);
 		h->SetMarkerStyle(20);
+		h->SetMarkerSize(2.5);
 		h->SetLineColor(1);
+
+		h->GetXaxis()->SetLabelFont(1);
+		h->GetXaxis()->SetTitleOffset(1.3);
+		h->GetYaxis()->SetTitleFont(2);
+		h->GetYaxis()->SetTitleOffset(1.22);
 
 		EnergyDist.push_back(h); 
 	}
@@ -258,7 +264,7 @@ void Highlight2(TVirtualPad *pad, TObject *obj, Int_t xhb, Int_t yhb)
 
 	if (!CanvasProj) 
 	{
-		TCanvas *CanvasProj = new TCanvas("CanvasProj", "CanvasProj", 0, 0, 800, 800);
+		TCanvas *CanvasProj = new TCanvas("CanvasProj", "CanvasProj", 0, 0, 1200, 800);
 		CanvasProj->cd();
 		EnergyDist[F->GetBin(xhb)]->SetTitle(Form("Detected momentum spectrum for %d degrees", (int)F->GetBinCenter(F->GetBin(xhb))));
 		EnergyDist[F->GetBin(xhb)]->Draw("E");
@@ -279,6 +285,7 @@ void Highlight2(TVirtualPad *pad, TObject *obj, Int_t xhb, Int_t yhb)
 		if (CanvasProj) delete CanvasProj;
 		return;
 	}
+
 
 	gPad-> SetLogx();
 	gPad-> SetLogy();

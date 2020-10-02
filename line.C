@@ -17,7 +17,7 @@
 
 void Highlight2(TVirtualPad *pad, TObject *obj, Int_t xhb, Int_t yhb);
 
-	std::vector<TH1D *> EnergyDist;
+std::vector<TH1D *> EnergyDist;
 
 	// teste de comentário
 void line()

@@ -14,11 +14,20 @@
 #include <TSpectrum.h>
 #include <TSpectrumTransform.h>
 
-void printout();
+void MakeTable();
+void graph(vector<double> v1, vector<double> v2, vector<double> v3, vector<double> v4, vector<double> v5, vector<double> v6, vector<double> v7, vector<double> v8);
+void setstyle();
 
-std::vector<double> xrandVec;
-std::vector<double> yrandVec;
-std::vector<double> zrandVec;
+std::vector<double> XrandVec;
+std::vector<double> YrandVec;
+std::vector<double> ZrandVec;
+
+std::vector<double> XdirVec;
+std::vector<double> YdirVec;
+std::vector<double> ZdirVec;
+
+std::vector<double> ChargeVec;
+std::vector<double> ErandVec;
 
 const double AngleProb[9] = 
 {
@@ -88,58 +97,53 @@ const double MuonMomentumPDF[16][8] =
 
 void gerador()
 {
+    srand(1115529);
 
-    for (int i = 0; i < 10000; ++i)
+    long int size = 20000;
+
+    setstyle();
+
+    for (int i = 0; i < size; ++i)
     {
-        printout();
+        MakeTable();
     }
 
+    graph(XrandVec,YrandVec,ZrandVec,XdirVec,YdirVec,ZdirVec,ErandVec,ChargeVec);
 
 
+    ofstream myfile ("lookup.hh");
 
-    TH1D *simpleX   = new TH1D("simpleX", "simpleX", 200, -100, 100);
-    TH1D *simpleY   = new TH1D("simpleY", "simpleY", 200, -100, 100);
-    TH1D *simpleZ   = new TH1D("simpleZ", "simpleZ", 200, 0, 120);
-
-    for (Int_t i=0; i<xrandVec.size(); i++)
+    if (myfile.is_open())
     {
-        simpleX->Fill(xrandVec[i]);
-        simpleY->Fill(yrandVec[i]);
-        simpleZ->Fill(zrandVec[i]);
+        myfile << "// PosX (m), PosY (m), PosZ (m), DirX, DirY, DirZ, P (GeV/c), charge" << endl;
+        myfile << "const double lookup[" << size << "][" << 8 << "] =" << endl;
+        myfile << "{" << endl;
+
+
+        for (int i = 0; i < size; ++i)
+        {
+            myfile << "    {"   <<  XrandVec[i]     << ", ";
+            myfile <<               YrandVec[i]     << ", ";
+            myfile <<               ZrandVec[i]     << ", ";
+            myfile <<               XdirVec[i]      << ", ";
+            myfile <<               YdirVec[i]      << ", ";
+            myfile <<               ZdirVec[i]      << ", ";
+            myfile <<               ErandVec[i]     << ", ";
+            myfile <<               ChargeVec[i]    << "}," << endl;
+        }
+
+        myfile << "};" << endl;
+        myfile.close();
     }
-    
-    simpleX->SetTitle("Eixo X");
-    simpleX->GetXaxis()->SetTitle("Distancia (cm)");
-    simpleX->GetYaxis()->SetTitle("#");
-    simpleX->SetLineWidth(1);
-
-    simpleY->SetTitle("Eixo Y");
-    simpleY->GetXaxis()->SetTitle("Distancia (cm)");
-    simpleY->GetYaxis()->SetTitle("#");
-    simpleY->SetLineWidth(1);
-
-    simpleZ->SetTitle("Eixo Z");
-    simpleZ->GetXaxis()->SetTitle("Distancia (cm)");
-    simpleZ->GetYaxis()->SetTitle("#");
-    simpleZ->SetLineWidth(1);
+    else cout << "Unable to open file";
 
 
-    TCanvas *Simple = new TCanvas("Simple", "Simple plots", 1600, 900);
-    Simple->Divide(2,2);
 
-    Simple->cd(1);
-    simpleX->Draw();
-
-    Simple->cd(2);
-    simpleY->Draw();
-
-    Simple->cd(3);
-    simpleZ->Draw();
 
     return;
 }
 
-void printout()
+void MakeTable()
 {
 
 
@@ -171,19 +175,23 @@ void printout()
     zrand = zrand / 20;
 
 
-    xrandVec.push_back(raio*sin(Zenith)*cos(theta)  + xrand); 
-    yrandVec.push_back(raio*sin(Zenith)*sin(theta)  + yrand); 
-    zrandVec.push_back(raio*cos(Zenith)             + zrand); 
+    XrandVec.push_back(raio*sin(Zenith)*cos(theta)  + xrand); 
+    YrandVec.push_back(raio*sin(Zenith)*sin(theta)  + yrand); 
+    ZrandVec.push_back(raio*cos(Zenith)             + zrand); 
 
+    double mod =    pow(raio*sin(Zenith)*cos(theta) + xrand, 2) + 
+                    pow(raio*sin(Zenith)*sin(theta) + yrand, 2) + 
+                    pow(raio*cos(Zenith) + zrand,2);
 
-    // cout << raio*sin(Zenith)*cos(theta) + xrand << " " << raio*sin(Zenith)*sin(theta)  + yrand << " " << raio*cos(Zenith)  + zrand ;    
-    // cout <<  xrand/20 << " " <<  yrand/20 << " " << zrand/20 ;
+    mod = pow(mod,0.5);
+
+    XdirVec.push_back(-(raio*sin(Zenith)*cos(theta) + xrand)/mod);
+    YdirVec.push_back(-(raio*sin(Zenith)*sin(theta) + yrand)/mod);
+    ZdirVec.push_back(-(raio*cos(Zenith)            + zrand)/mod);
+
 
     double  Energy          = 0;
     double  EnergySelector  = (rand() % 100) ;
-
-    // cout << " " << EnergySelector/100 << endl;
-
 
     for (int i = 1; i < 16; ++i)
     {
@@ -193,8 +201,137 @@ void printout()
             break;
         }
     }
+    
+    ErandVec.push_back(Energy);
 
-    // cout << " " << Energy << endl;
+    double chargeSelector = rand() % 10000;
+
+    chargeSelector = chargeSelector / 100;
+  
+    if (chargeSelector > 45.45)
+    {
+        ChargeVec.push_back(-1);
+    }
+    else 
+    {
+        ChargeVec.push_back(1);
+    }
+
+    return;
+}
+
+void graph(vector<double> v1, vector<double> v2, vector<double> v3, vector<double> v4, vector<double> v5, vector<double> v6, vector<double> v7, vector<double> v8)
+{
+
+    TH1D *simpleX   = new TH1D("simpleX", "simpleX", 200, -100, 100);
+    TH1D *simpleY   = new TH1D("simpleY", "simpleY", 200, -100, 100);
+    TH1D *simpleZ   = new TH1D("simpleZ", "simpleZ", 200,    0, 110);
+    
+    TH1D *dirX      = new TH1D("dirX", "dirX", 200, -1.0, 1);
+    TH1D *dirY      = new TH1D("dirY", "dirY", 200, -1.0, 1);
+    TH1D *dirZ      = new TH1D("dirZ", "dirZ", 200, -1.1, 0);
+
+
+    TH1D *simpleE   = new TH1D("simpleE", "simpleE", 300, 0.1, 20);
+    TH1D *simpleC   = new TH1D("simpleC", "simpleC", 22, -2, 2);
+
+    for (Int_t i=0; i < v1.size(); i++)
+    {
+        simpleX->Fill(v1[i]);
+        simpleY->Fill(v2[i]);
+        simpleZ->Fill(v3[i]);
+
+        dirX->Fill(v4[i]);
+        dirY->Fill(v5[i]);
+        dirZ->Fill(v6[i]);
+
+        simpleE->Fill(v7[i]);
+        simpleC->Fill(v8[i]);
+    }
+    
+    simpleX->SetTitle("Position - X axis");
+    simpleX->GetXaxis()->SetTitle("Position (m)");
+    simpleX->GetYaxis()->SetTitle("#");
+    simpleX->SetLineWidth(1);
+
+    simpleY->SetTitle("Position - Y axis");
+    simpleY->GetXaxis()->SetTitle("Position (m)");
+    simpleY->GetYaxis()->SetTitle("#");
+    simpleY->SetLineWidth(1);
+
+    simpleZ->SetTitle("Position - Z axis");
+    simpleZ->GetXaxis()->SetTitle("Position (m)");
+    simpleZ->GetYaxis()->SetTitle("#");
+    simpleZ->SetLineWidth(1);
+
+    dirX->SetTitle("Direction - X axis");
+    dirX->GetXaxis()->SetTitle("normalized units");
+    dirX->GetYaxis()->SetTitle("#");
+    dirX->SetLineWidth(1);
+    
+    dirY->SetTitle("Direction - Y axis");
+    dirY->GetXaxis()->SetTitle("normalized units");
+    dirY->GetYaxis()->SetTitle("#");
+    dirY->SetLineWidth(1);
+
+    dirZ->SetTitle("Direction - Z axis");
+    dirZ->GetXaxis()->SetTitle("normalized units");
+    dirZ->GetYaxis()->SetTitle("#");
+    dirZ->SetLineWidth(1);
+
+    simpleE->SetTitle("Momentum");
+    simpleE->GetXaxis()->SetTitle("Momentum (GeV/c)");
+    simpleE->GetYaxis()->SetTitle("#");
+    simpleE->SetLineWidth(1);
+
+    simpleC->SetTitle("Muon charge");
+    simpleC->GetXaxis()->SetTitle("charge");
+    simpleC->GetYaxis()->SetTitle("#");
+    simpleC->SetLineWidth(1);
+
+
+    TCanvas *Simple = new TCanvas("Simple", "Simple plots", 1600, 900);
+    Simple->Divide(3,3);
+
+    Simple->cd(1);
+    simpleX->Draw();
+
+    Simple->cd(2);
+    simpleY->Draw();
+
+    Simple->cd(3);
+    simpleZ->Draw();
+
+    Simple->cd(4);
+    dirX->Draw();
+
+    Simple->cd(5);
+    dirY->Draw();
+
+    Simple->cd(6);
+    dirZ->Draw();
+
+    Simple->cd(7);
+    gPad-> SetLogx();
+    simpleE->Draw();
+
+    Simple->cd(8);
+    simpleC->Draw();
+
+    return;
+}
+
+void setstyle()
+{
+    gStyle->SetPadTickX(1);
+    gStyle->SetPadTickY(1);
+    gStyle->SetPadGridX(1);
+    gStyle->SetPadGridY(1);
+    gStyle->SetStatY(0.9);
+    gStyle->SetStatX(0.95);
+    gStyle->SetStatW(0.3);
+    gStyle->SetStatH(0.2);
+    gStyle->SetStatBorderSize(3);
 
     return;
 }

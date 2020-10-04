@@ -12,6 +12,8 @@
 #include "G4ParticleDefinition.hh"
 
 #include "G4SystemOfUnits.hh"
+#include <stdlib.h>     /* srand, rand */
+#include <stdio.h>
 
 // ============================================================================
 
@@ -49,65 +51,46 @@ void Filtro_PrimaryGeneratorAction::GeneratePrimaries(G4Event* anEvent) {
     // 	a uniform probability random number generator. Cheking 
     //  if the UniformRand landed between the cummulative steps
     //  works sorta well (not smoothly, unfortunately)
+    G4ParticleTable* particleTable = G4ParticleTable::GetParticleTable();
 
 
-
-	G4double	Zenith 			= 0;
-    G4double	ZenithSelector 	= G4UniformRand() * 100;
-    G4int		ZenithIndex 	= 0;
-
-    printf("%d  - %lf\n",anEvent->GetEventID(),  lookup[anEvent->GetEventID()][0]);
-    
-    for (int i = 1; i < 9; ++i)
+    if (lookup[anEvent->GetEventID()][7] == -1)
     {
-    	if(AngleProb[i-1] <= ZenithSelector && AngleProb[i] > ZenithSelector)
-    	{
-    		Zenith = Angle[i]*3.1415/180;
-    		ZenithIndex = i;
-    		break;
-    	}
+        particleGun->SetParticleDefinition(particleTable->FindParticle("mu-"));
     }
+    else
+    {
+        particleGun->SetParticleDefinition(particleTable->FindParticle("mu+"));
+    }   
 
 
-	G4double theta = G4UniformRand()*2*3.1415;
+    G4ThreeVector position  = G4ThreeVector(    lookup[anEvent->GetEventID()][0]*m,
+                                                lookup[anEvent->GetEventID()][1]*m,
+                                                lookup[anEvent->GetEventID()][2]*m);
 
-    G4double raio  = 100.0;
-
-
-    // G4ThreeVector DetecPos = G4ThreeVector(0 * m, 0 * m, -33 * m);
-
-    G4ThreeVector position = G4ThreeVector(raio*sin(Zenith)*cos(theta)*m, raio*sin(Zenith)*sin(theta)*m, (raio*cos(Zenith) - 33)*m);
+    G4ThreeVector direction = G4ThreeVector(    lookup[anEvent->GetEventID()][3],
+                                                lookup[anEvent->GetEventID()][4],
+                                                lookup[anEvent->GetEventID()][5]);
 
 
     particleGun->SetParticleTime(0.*ns);
  
     particleGun->SetParticlePosition(position);
 
-	position.setZ(position.getZ() + 33*m);
+    particleGun->SetParticleMomentumDirection(direction); 
 
-    particleGun->SetParticleMomentumDirection(position.operator-()); 
+    
+    G4double    pp      =   lookup[anEvent->GetEventID()][6];
+    G4double    mass    =   particleGun->GetParticleDefinition()->GetPDGMass(); 
+    G4double    Ekin    =   sqrt(pp*pp+mass*mass/(1000*1000))-mass/1000; 
 
+    // printf("momentum: %lf GeV/c\n",pp );
+    // printf("mass    : %lf MeV/c2\n",mass );
+    // printf("Energy  : %lf GeV\n",Ekin );
+    // printf("__________\n");
+    particleGun->SetParticleEnergy(Ekin * GeV);
+    
 
-
-
-	G4double	Energy 			= 0;
-    G4double	EnergySelector 	= G4UniformRand();
-
-    // printf("The ZenithIndex is %d | ", ZenithIndex);
-
-    for (int i = 1; i < 16; ++i)
-    {
-    	if (MuonMomentumPDF[i-1][ZenithIndex] <= EnergySelector && MuonMomentumPDF[i][ZenithIndex] > EnergySelector)
-    	{
-    		Energy = MuonMomentum[i];
-    		break;
-    	}
-    }
-
-
-    particleGun->SetParticleEnergy (Energy * GeV);
-
-    // printf("The geantino energy is %lf GeV\n", Energy);
 
     particleGun->GeneratePrimaryVertex(anEvent);
     

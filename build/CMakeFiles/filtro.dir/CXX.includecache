@@ -291,6 +291,10 @@ G4ParticleDefinition.hh
 /home/felipe/Geant4/dev/piramide/src/src/G4ParticleDefinition.hh
 G4SystemOfUnits.hh
 /home/felipe/Geant4/dev/piramide/src/src/G4SystemOfUnits.hh
+stdlib.h
+-
+stdio.h
+-
 
 /home/felipe/Geant4/dev/piramide/src/src/Filtro_RunAction.cc
 G4Timer.hh

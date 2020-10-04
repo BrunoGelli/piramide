@@ -99,7 +99,7 @@ void gerador()
 {
     srand(1115529);
 
-    long int size = 10000;
+    long int size = 1000000;
 
     setstyle();
 
@@ -172,24 +172,24 @@ void MakeTable()
     double yrand = rand() % 300 - 150;
     double zrand = rand() % 300 - 150;
 
-    xrand = xrand / 20;
-    yrand = yrand / 20;
-    zrand = zrand / 20;
+    xrand = xrand / 150;
+    yrand = yrand / 150;
+    zrand = -32 + zrand / 150;
 
 
     XrandVec.push_back(raio*sin(Zenith)*cos(theta)  + xrand); 
     YrandVec.push_back(raio*sin(Zenith)*sin(theta)  + yrand); 
     ZrandVec.push_back(raio*cos(Zenith)             + zrand); 
 
-    double mod =    pow(raio*sin(Zenith)*cos(theta) + xrand, 2) + 
-                    pow(raio*sin(Zenith)*sin(theta) + yrand, 2) + 
-                    pow(raio*cos(Zenith) + zrand,2);
+    double mod =    pow(raio*sin(Zenith)*cos(theta) , 2) + 
+                    pow(raio*sin(Zenith)*sin(theta) , 2) + 
+                    pow(raio*cos(Zenith)            , 2);
 
     mod = pow(mod,0.5);
 
-    XdirVec.push_back(-(raio*sin(Zenith)*cos(theta) + xrand)/mod);
-    YdirVec.push_back(-(raio*sin(Zenith)*sin(theta) + yrand)/mod);
-    ZdirVec.push_back(-(raio*cos(Zenith)            + zrand)/mod);
+    XdirVec.push_back(-(raio*sin(Zenith)*cos(theta) )/mod);
+    YdirVec.push_back(-(raio*sin(Zenith)*sin(theta) )/mod);
+    ZdirVec.push_back(-(raio*cos(Zenith)            )/mod);
 
 
     double  Energy          = 0;
@@ -204,7 +204,7 @@ void MakeTable()
         }
     }
     
-    ErandVec.push_back(Energy);
+    ErandVec.push_back(Energy); // changer here
 
     double chargeSelector = rand() % 10000;
 

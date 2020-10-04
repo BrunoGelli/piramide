@@ -93,12 +93,12 @@ void Filtro_SteppingAction::UserSteppingAction (const G4Step* aStep) {
     // 		G4TrackStatus 			 ultimo 		 = aStep->GetTrack()->GetTrackStatus();
 
 
-	//  	if (particle != "mu-")
-	//  	{
-	// 			track->SetTrackStatus(fStopAndKill);
-	//  	}
+ 	if (particle == "e-" || particle == "e+" || particle == "gamma")
+ 	{
+			track->SetTrackStatus(fStopAndKill);
+ 	}
 
-   	if (particle == "geantino" && PostVolName == "detector_LV")
+   	if (particle == "mu-"   && PostVolName == "detector_LV")
    	{
 		analysisManager->FillNtupleIColumn(1,0,fEventNumber);
 		analysisManager->FillNtupleDColumn(1,1,step_x/m);
@@ -123,7 +123,30 @@ void Filtro_SteppingAction::UserSteppingAction (const G4Step* aStep) {
 
    	}
 
+    if (particle == "mu+"   && PostVolName == "detector_LV")
+    {
+        analysisManager->FillNtupleIColumn(1,0,fEventNumber);
+        analysisManager->FillNtupleDColumn(1,1,step_x/m);
+        analysisManager->FillNtupleDColumn(1,2,step_y/m);
+        analysisManager->FillNtupleDColumn(1,3,step_z/m);
+        analysisManager->FillNtupleDColumn(1,4,track->GetGlobalTime()/ns);
+        analysisManager->FillNtupleDColumn(1,5,kinEnergy/GeV);
+        analysisManager->FillNtupleDColumn(1,6,acos(CosAngle)*180/3.1415);
+        analysisManager->FillNtupleDColumn(1,7,direction_x);
+        analysisManager->FillNtupleDColumn(1,8,direction_y);
+        analysisManager->FillNtupleDColumn(1,9,direction_z);
+        analysisManager->AddNtupleRow(1);
 
+        track->SetTrackStatus(fStopAndKill);
+        
+        if ((fEventNumber%10000 == 0 && fEventNumber > 9999) ||  fEventNumber == 0)
+        {
+            // cout << "Rodando evento número: "<< fEventNumber << endl;
+            // cout << "Rodando evento número: "<< fEventNumber << " " << ultimo << " " << particle << " " << PreVolName << " "  << PostVolName << " " << kinEnergy << " " << fEventNumber << endl;
+            cout << "Rodando evento número: "<< fEventNumber << " " << particle << " "  << PostVolName << " " << kinEnergy << endl;
+        }
+
+    }
 
 
 

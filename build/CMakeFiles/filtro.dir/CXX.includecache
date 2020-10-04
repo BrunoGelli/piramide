@@ -102,6 +102,8 @@ G4UserSteppingAction.hh
 G4SystemOfUnits.hh
 /home/felipe/Geant4/dev/piramide/src/include/G4SystemOfUnits.hh
 
+/home/felipe/Geant4/dev/piramide/src/include/lookup.hh
+
 /home/felipe/Geant4/dev/piramide/src/src/Filtro_ActionInitialization.cc
 Filtro_ActionInitialization.hh
 /home/felipe/Geant4/dev/piramide/src/src/Filtro_ActionInitialization.hh
@@ -273,6 +275,8 @@ Filtro_PrimaryGeneratorAction.hh
 /home/felipe/Geant4/dev/piramide/src/src/Filtro_PrimaryGeneratorAction.hh
 Filtro_Constantes.hh
 /home/felipe/Geant4/dev/piramide/src/src/Filtro_Constantes.hh
+lookup.hh
+/home/felipe/Geant4/dev/piramide/src/src/lookup.hh
 Randomize.hh
 /home/felipe/Geant4/dev/piramide/src/src/Randomize.hh
 G4INCLThreeVector.hh

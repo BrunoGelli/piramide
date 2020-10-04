@@ -21,12 +21,14 @@ class Filtro_SteppingAction : public G4UserSteppingAction {
 
    public:
        Filtro_SteppingAction(Filtro_EventAction *eventAction, Filtro_RunAction* runAction,  Filtro_PrimaryGeneratorAction* primaryAction);
+	
+		G4int fEventNumber;
+
 	virtual ~Filtro_SteppingAction ();
 
 	virtual void UserSteppingAction (const G4Step*);
 
    private:
-	G4int fEventNumber;
     Filtro_EventAction* fEventAction;
     Filtro_RunAction* fRunAction;
     Filtro_PrimaryGeneratorAction* fPriAction;

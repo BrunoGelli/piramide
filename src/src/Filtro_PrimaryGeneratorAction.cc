@@ -1,6 +1,8 @@
 #include "Filtro_PrimaryGeneratorAction.hh"
 #include "Filtro_Constantes.hh"
 
+#include "lookup.hh"
+
 #include "Randomize.hh"
 #include <G4INCLThreeVector.hh>
 
@@ -48,10 +50,14 @@ void Filtro_PrimaryGeneratorAction::GeneratePrimaries(G4Event* anEvent) {
     //  if the UniformRand landed between the cummulative steps
     //  works sorta well (not smoothly, unfortunately)
 
+
+
 	G4double	Zenith 			= 0;
     G4double	ZenithSelector 	= G4UniformRand() * 100;
-    G4int		ZenithIndex 	= 0;		
+    G4int		ZenithIndex 	= 0;
 
+    printf("%d  - %lf\n",anEvent->GetEventID(),  lookup[anEvent->GetEventID()][0]);
+    
     for (int i = 1; i < 9; ++i)
     {
     	if(AngleProb[i-1] <= ZenithSelector && AngleProb[i] > ZenithSelector)
@@ -77,7 +83,7 @@ void Filtro_PrimaryGeneratorAction::GeneratePrimaries(G4Event* anEvent) {
  
     particleGun->SetParticlePosition(position);
 
-	position.setZ( position.getZ() + 33*m);
+	position.setZ(position.getZ() + 33*m);
 
     particleGun->SetParticleMomentumDirection(position.operator-()); 
 

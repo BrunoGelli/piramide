@@ -1770,6 +1770,7 @@ CMakeFiles/filtro.dir/src/Filtro_PhysicsList.cc.o: /home/felipe/Geant4/geant4_10
 
 CMakeFiles/filtro.dir/src/Filtro_PrimaryGeneratorAction.cc.o: /home/felipe/Geant4/dev/piramide/src/include/Filtro_Constantes.hh
 CMakeFiles/filtro.dir/src/Filtro_PrimaryGeneratorAction.cc.o: /home/felipe/Geant4/dev/piramide/src/include/Filtro_PrimaryGeneratorAction.hh
+CMakeFiles/filtro.dir/src/Filtro_PrimaryGeneratorAction.cc.o: /home/felipe/Geant4/dev/piramide/src/include/lookup.hh
 CMakeFiles/filtro.dir/src/Filtro_PrimaryGeneratorAction.cc.o: /home/felipe/Geant4/dev/piramide/src/src/Filtro_PrimaryGeneratorAction.cc
 CMakeFiles/filtro.dir/src/Filtro_PrimaryGeneratorAction.cc.o: /home/felipe/Geant4/geant4_10_06_p02-install/include/Geant4/CLHEP/Random/DualRand.h
 CMakeFiles/filtro.dir/src/Filtro_PrimaryGeneratorAction.cc.o: /home/felipe/Geant4/geant4_10_06_p02-install/include/Geant4/CLHEP/Random/JamesRandom.h

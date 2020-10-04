@@ -99,7 +99,7 @@ void gerador()
 {
     srand(1115529);
 
-    long int size = 20000;
+    long int size = 10000;
 
     setstyle();
 
@@ -116,7 +116,7 @@ void gerador()
     if (myfile.is_open())
     {
         myfile << "// PosX (m), PosY (m), PosZ (m), DirX, DirY, DirZ, P (GeV/c), charge" << endl;
-        myfile << "const double lookup[" << size << "][" << 8 << "] =" << endl;
+        myfile << "const double lookup[" << size+1 << "][" << 8 << "] =" << endl;
         myfile << "{" << endl;
 
 
@@ -131,6 +131,8 @@ void gerador()
             myfile <<               ErandVec[i]     << ", ";
             myfile <<               ChargeVec[i]    << "}," << endl;
         }
+
+        myfile << "    {0.0000, 0.0000, 0.0000, 0.0000, 0.0000, 0.0000, 0.0000, 0.0000}" << endl;
 
         myfile << "};" << endl;
         myfile.close();

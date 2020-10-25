@@ -42,13 +42,13 @@ void signal()
 	// os dados estão salvos
 
  	std::vector<TString> fileNames;
- 	fileNames.push_back("OutPut_t0.root");
- 	fileNames.push_back("OutPut_t1.root");
- 	fileNames.push_back("OutPut_t2.root");
- 	fileNames.push_back("OutPut_t3.root");
- 	fileNames.push_back("OutPut_t4.root");
- 	fileNames.push_back("OutPut_t5.root");
- 	fileNames.push_back("OutPut_t6.root");
+ 	fileNames.push_back("OutPutbetter.root");
+ 	// fileNames.push_back("OutPut_t1.root");
+ 	// fileNames.push_back("OutPut_t2.root");
+ 	// fileNames.push_back("OutPut_t3.root");
+ 	// fileNames.push_back("OutPut_t4.root");
+ 	// fileNames.push_back("OutPut_t5.root");
+ 	// fileNames.push_back("OutPut_t6.root");
 	
  	// cria vetores de dados e variáveis auxiliares
 
@@ -116,9 +116,9 @@ void signal()
 
  	// now we create a preliminary plot of each axis to see if anything went wrong
 
-	TH1D *simpleX	= new TH1D("simpleX", "simpleX", 100, -60, 60);
-	TH1D *simpleY	= new TH1D("simpleY", "simpleY", 100, -60, 60);
-	TH1D *simpleZ	= new TH1D("simpleZ", "simpleZ", 100, -60, 60);
+	TH1D *simpleX	= new TH1D("simpleX", "simpleX", 100, -6, 6);
+	TH1D *simpleY	= new TH1D("simpleY", "simpleY", 100, -6, 6);
+	TH1D *simpleZ	= new TH1D("simpleZ", "simpleZ", 100, -6, 6);
 	TH1D *simpleT	= new TH1D("simpleT", "simpleT", 200, 200, 400);
 
 	for (Int_t i=0; i<size; i++)
@@ -181,7 +181,7 @@ void signal()
 	//*********************************************************************************
 	
 
-	TH2D* Frente = new TH2D("Distribuicao na base da pir#hat{a}mide", "Distribuicao na base da pir#hat{a}mide", 60, -60, 60, 60, -60, 60);
+	TH2D* Frente = new TH2D("Distribuicao na base da pir#hat{a}mide", "Distribuicao na base da pir#hat{a}mide", 50, -0.6, 0.6, 50, -0.6, 0.6);
 	
 	Int_t bin = 0;
 	Int_t number_of_bins = TMath::Power(TMath::Sqrt(Frente->GetSize()), 2);

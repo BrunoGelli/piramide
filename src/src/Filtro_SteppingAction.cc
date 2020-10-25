@@ -95,10 +95,16 @@ void Filtro_SteppingAction::UserSteppingAction (const G4Step* aStep) {
 
  	if (particle == "e-" || particle == "e+" || particle == "gamma")
  	{
-			track->SetTrackStatus(fStopAndKill);
+		track->SetTrackStatus(fStopAndKill);
  	}
+    
+    if (PostVolName == "fim_da_linha_LV")
+    {
+        track->SetTrackStatus(fStopAndKill);
+    }
 
-   	if (particle == "mu-"   && PostVolName == "detector_LV")
+
+   	if (particle == "mu-"   && (PostVolName == "detector1_LV" || PostVolName == "detector2_LV" || PostVolName == "detector3_LV" ))
    	{
 		analysisManager->FillNtupleIColumn(1,0,fEventNumber);
 		analysisManager->FillNtupleDColumn(1,1,step_x/m);
@@ -111,19 +117,15 @@ void Filtro_SteppingAction::UserSteppingAction (const G4Step* aStep) {
 		analysisManager->FillNtupleDColumn(1,8,direction_y);
 		analysisManager->FillNtupleDColumn(1,9,direction_z);
 		analysisManager->AddNtupleRow(1);
-
-		track->SetTrackStatus(fStopAndKill);
    		
    		if ((fEventNumber%10000 == 0 && fEventNumber > 9999) ||  fEventNumber == 0)
 	   	{
-			// cout << "Rodando evento número: "<< fEventNumber << endl;
-			// cout << "Rodando evento número: "<< fEventNumber << " " << ultimo << " " << particle << " " << PreVolName << " "  << PostVolName << " " << kinEnergy << " " << fEventNumber << endl;
-			cout << "Rodando evento número: "<< fEventNumber << " " << particle << " "  << PostVolName << " " << kinEnergy << endl;
+			cout << "Rodando evento número: "<< fEventNumber << ". Dados: " << particle << " "  << PostVolName << " " << kinEnergy << endl;
    		}
 
    	}
 
-    if (particle == "mu+"   && PostVolName == "detector_LV")
+    if (particle == "mu+" && (PostVolName == "detector1_LV" || PostVolName == "detector2_LV" || PostVolName == "detector3_LV" ))
     {
         analysisManager->FillNtupleIColumn(1,0,fEventNumber);
         analysisManager->FillNtupleDColumn(1,1,step_x/m);
@@ -136,14 +138,10 @@ void Filtro_SteppingAction::UserSteppingAction (const G4Step* aStep) {
         analysisManager->FillNtupleDColumn(1,8,direction_y);
         analysisManager->FillNtupleDColumn(1,9,direction_z);
         analysisManager->AddNtupleRow(1);
-
-        track->SetTrackStatus(fStopAndKill);
         
         if ((fEventNumber%10000 == 0 && fEventNumber > 9999) ||  fEventNumber == 0)
         {
-            // cout << "Rodando evento número: "<< fEventNumber << endl;
-            // cout << "Rodando evento número: "<< fEventNumber << " " << ultimo << " " << particle << " " << PreVolName << " "  << PostVolName << " " << kinEnergy << " " << fEventNumber << endl;
-            cout << "Rodando evento número: "<< fEventNumber << " " << particle << " "  << PostVolName << " " << kinEnergy << endl;
+            cout << "Rodando evento número: "<< fEventNumber << ". Dados: " << particle << " "  << PostVolName << " " << kinEnergy << endl;
         }
 
     }

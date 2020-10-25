@@ -58,21 +58,21 @@ const double Angle[9] =
 
 const double MuonMomentum[15] = 
 {
-    1.31E-01, 
-    2.13E-01, 
-    3.42E-01, 
-    5.53E-01, 
-    8.81E-01, 
-    1.43E+00, 
-    2.30E+00, 
-    3.69E+00, 
-    5.96E+00, 
-    9.59E+00, 
-    1.55E+01, 
-    2.49E+01, 
-    4.02E+01, 
-    6.47E+01, 
-    1.05E+02
+    0.131, 
+    0.213, 
+    0.342, 
+    0.553, 
+    0.881, 
+    1.43, 
+    2.30, 
+    3.69, 
+    5.96, 
+    9.59, 
+    15.5, 
+    24.9, 
+    40.2, 
+    64.7, 
+    105
 };
 
 const double MuonMomentumPDF[16][8] =
@@ -99,7 +99,7 @@ void gerador()
 {
     srand(1115529);
 
-    long int size = 1000000;
+    long int size = 100000;
 
     setstyle();
 
@@ -168,13 +168,13 @@ void MakeTable()
 
     double raio  = 100.0;
 
-    double xrand = rand() % 300 - 150;
-    double yrand = rand() % 300 - 150;
-    double zrand = rand() % 300 - 150;
+    double xrand = rand() % 30000 - 15000;
+    double yrand = rand() % 30000 - 15000;
+    double zrand = rand() % 30000 - 15000;
 
-    xrand = xrand / 150;
-    yrand = yrand / 150;
-    zrand = -32 + zrand / 150;
+    xrand = xrand / 15000;
+    yrand = yrand / 15000;
+    zrand = -32 + zrand / 15000;
 
 
     XrandVec.push_back(raio*sin(Zenith)*cos(theta)  + xrand); 
@@ -192,24 +192,34 @@ void MakeTable()
     ZdirVec.push_back(-(raio*cos(Zenith)            )/mod);
 
 
-    double  Energy          = 0;
-    double  EnergySelector  = (rand() % 100) ;
+    double  Energy = 0;
 
-    for (int i = 1; i < 16; ++i)
+
+    while(Energy < 6)
     {
-        if (MuonMomentumPDF[i-1][ZenithIndex-1] <= EnergySelector/100 && MuonMomentumPDF[i][ZenithIndex-1] > EnergySelector/100)
+        double  EnergySelector  = (rand() % 10000000) ;
+
+        for (int i = 1; i < 16; ++i)
         {
-            Energy = MuonMomentum[i];
-            break;
+            if (MuonMomentumPDF[i-1][ZenithIndex-1] <= EnergySelector/10000000 && MuonMomentumPDF[i][ZenithIndex-1] > EnergySelector/10000000)
+            {
+                Energy = MuonMomentum[i];
+                break;
+            }
         }
+       
     }
-    
+
     ErandVec.push_back(Energy); // changer here
+
+
 
     double chargeSelector = rand() % 10000;
 
     chargeSelector = chargeSelector / 100;
   
+   
+
     if (chargeSelector > 45.45)
     {
         ChargeVec.push_back(-1);
@@ -218,6 +228,7 @@ void MakeTable()
     {
         ChargeVec.push_back(1);
     }
+    
 
     return;
 }
@@ -234,7 +245,7 @@ void graph(vector<double> v1, vector<double> v2, vector<double> v3, vector<doubl
     TH1D *dirZ      = new TH1D("dirZ", "dirZ", 200, -1.1, 0);
 
 
-    TH1D *simpleE   = new TH1D("simpleE", "simpleE", 300, 0.1, 20);
+    TH1D *simpleE   = new TH1D("simpleE", "simpleE", 30000, 5, 200);
     TH1D *simpleC   = new TH1D("simpleC", "simpleC", 22, -2, 2);
 
     for (Int_t i=0; i < v1.size(); i++)
@@ -315,6 +326,7 @@ void graph(vector<double> v1, vector<double> v2, vector<double> v3, vector<doubl
 
     Simple->cd(7);
     gPad-> SetLogx();
+    gPad-> SetLogy();
     simpleE->Draw();
 
     Simple->cd(8);

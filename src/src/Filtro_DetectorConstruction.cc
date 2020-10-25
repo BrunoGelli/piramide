@@ -66,9 +66,15 @@ Filtro_DetectorConstruction::Filtro_DetectorConstruction (G4double RIndex)
     base_z       = 6 * m * 0.5;   
 
     // Detector
-    detector_x       = 2 * m * 0.5;
-    detector_y       = 2 * m * 0.5;
-    detector_z       = 2 * m * 0.5;
+    detector_x       = 40 * cm * 0.5;
+    detector_y       = 40 * cm * 0.5;
+    detector_z       = 02 * cm * 0.5;
+
+
+    // Detector
+    fim_x       = base_x;
+    fim_y       = base_y;
+    fim_z       = base_z;
 
 }
 
@@ -133,7 +139,7 @@ G4VPhysicalVolume* Filtro_DetectorConstruction::DefineVolumes() {
 
     G4LogicalVolume* 	piramide_LV 	=  	new G4LogicalVolume (piramide, CONCRETE, "piramide_LV");
     
-    G4VPhysicalVolume* 	piramide_PV 	=  	new G4PVPlacement (0, G4ThreeVector(), piramide_LV, "piramide_LV", world_LV, true, 0, fCheckOverlaps);
+    new G4PVPlacement (0, G4ThreeVector(), piramide_LV, "piramide_LV", world_LV, true, 0, fCheckOverlaps);
 
 
 //===================== Base ======================
@@ -144,17 +150,43 @@ G4VPhysicalVolume* Filtro_DetectorConstruction::DefineVolumes() {
    
     G4LogicalVolume*    base_LV         =   new G4LogicalVolume (base, CONCRETE, "detector_LV");
 
-    G4VPhysicalVolume*  base_PV         =   new G4PVPlacement (NULL,  pos_base, base_LV, "base_LV",  world_LV, true, 0, fCheckOverlaps);
+    new G4PVPlacement (NULL,  pos_base, base_LV, "base_LV",  world_LV, true, 0, fCheckOverlaps);
 
-//===================== Detector ======================
+//===================== Detectores ======================
 
-    G4ThreeVector       pos_detector    =       G4ThreeVector(0*cm, 0*cm, 0*cm);//-(piramide_z + base_z + detector_z + 1 * m) );
+    G4ThreeVector       pos_detector1    =       G4ThreeVector(0*cm, 0*cm,  65 * cm + detector_z);  //-(piramide_z + base_z + detector_z + 1 * m) );
+    G4ThreeVector       pos_detector2    =       G4ThreeVector(0*cm, 0*cm,   0 * cm);               //-(piramide_z + base_z + detector_z + 1 * m) );
+    G4ThreeVector       pos_detector3    =       G4ThreeVector(0*cm, 0*cm, -10 * cm - detector_z);  //-(piramide_z + base_z + detector_z + 1 * m) );
 
-    G4Box*              detector        =   new G4Box("detector", detector_x, detector_y, detector_z); 
+    G4Box*              detector1        =   new G4Box("detector1", detector_x, detector_y, detector_z); 
    
-    G4LogicalVolume*    detector_LV     =   new G4LogicalVolume (detector, CONCRETE, "detector_LV");
+    G4LogicalVolume*    detector1_LV     =   new G4LogicalVolume (detector1, CONCRETE, "detector1_LV");
 
-    G4VPhysicalVolume*  detector_PV     =   new G4PVPlacement (NULL,  pos_detector, detector_LV, "detector_LV",  base_LV, true, 0, fCheckOverlaps);
+    new G4PVPlacement (NULL,  pos_detector1, detector1_LV, "detector_LV",  base_LV, true, 0, fCheckOverlaps);
+
+
+    G4Box*              detector2        =   new G4Box("detector2", detector_x, detector_y, detector_z); 
+
+    G4LogicalVolume*    detector2_LV     =   new G4LogicalVolume (detector2, CONCRETE, "detector2_LV");
+
+    new G4PVPlacement (NULL,  pos_detector2, detector2_LV, "detector2_LV",  base_LV, true, 0, fCheckOverlaps);
+
+
+    G4Box*              detector3        =   new G4Box("detector3", detector_x, detector_y, detector_z); 
+   
+    G4LogicalVolume*    detector3_LV     =   new G4LogicalVolume (detector3, CONCRETE, "detector3_LV");
+
+    new G4PVPlacement (NULL,  pos_detector3, detector3_LV, "detector3_LV",  base_LV, true, 0, fCheckOverlaps);
+
+//===================== Final da linha ======================
+
+    G4ThreeVector       pos_fim        =       G4ThreeVector(0*cm, 0*cm, -(piramide_z + 2 * base_z + fim_z));
+
+    G4Box*              fim_da_linha        =   new G4Box("fim_da_linha", fim_x, fim_y, fim_z); 
+   
+    G4LogicalVolume*    fim_da_linha_LV     =   new G4LogicalVolume (fim_da_linha, CONCRETE, "fim_da_linha_LV");
+
+    new G4PVPlacement (NULL,  pos_fim, fim_da_linha_LV, "fim_da_linha_LV",  world_LV, true, 0, fCheckOverlaps);
 
 
 //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Visualization Attributes %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -184,7 +216,10 @@ G4VPhysicalVolume* Filtro_DetectorConstruction::DefineVolumes() {
 
     piramide_LV->SetVisAttributes(azul);
     world_LV->SetVisAttributes(transparente);
-    detector_LV->SetVisAttributes(branco2);
+    detector1_LV->SetVisAttributes(branco2);
+    detector2_LV->SetVisAttributes(branco2);
+    detector3_LV->SetVisAttributes(branco2);
+    fim_da_linha_LV->SetVisAttributes(vermelho);
 
 //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% End %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 

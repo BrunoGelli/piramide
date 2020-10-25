@@ -39,14 +39,16 @@ int main(int argc,char** argv) {
         RIndex = atof(argv [2]);
     }
 
-    G4MTRunManager* runManager = new G4MTRunManager;
-    runManager->SetNumberOfThreads(7);
+    G4RunManager* runManager = new G4RunManager;
+    // runManager->SetNumberOfThreads(7);
     runManager->SetVerboseLevel(0);
 
     Filtro_DetectorConstruction* detConstruction = new Filtro_DetectorConstruction(RIndex);
     runManager->SetUserInitialization(detConstruction);
 
-    G4VModularPhysicsList* physicsList = new FTFP_BERT;
+
+
+    G4VModularPhysicsList* physicsList = new FTFP_BERT();
     physicsList->ReplacePhysics(new G4EmStandardPhysics_option1());
 
     G4OpticalPhysics* opticalPhysics = new G4OpticalPhysics();
@@ -56,11 +58,11 @@ int main(int argc,char** argv) {
     runManager->SetUserInitialization(physicsList);
 
 
+    
     Filtro_ActionInitialization* actionInitialization
     = new Filtro_ActionInitialization(detConstruction);
 
     runManager->SetUserInitialization(actionInitialization);
-
 
 
 // visualization manager
@@ -74,6 +76,7 @@ int main(int argc,char** argv) {
 // ============================================================================
 // User Interface
     G4UImanager* UImanager = G4UImanager::GetUIpointer();
+    UImanager->SetVerboseLevel(0);
 
 // Define UI session for interactive mode
     if (argc < 3) 

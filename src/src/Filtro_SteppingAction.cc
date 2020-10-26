@@ -118,10 +118,9 @@ void Filtro_SteppingAction::UserSteppingAction (const G4Step* aStep) {
 		analysisManager->FillNtupleDColumn(1,9,direction_z);
 		analysisManager->AddNtupleRow(1);
    		
-   		if ((fEventNumber%10000 == 0 && fEventNumber > 9999) ||  fEventNumber == 0)
-	   	{
-			cout << "Rodando evento número: "<< fEventNumber << ". Dados: " << particle << " "  << PostVolName << " " << kinEnergy << endl;
-   		}
+
+		cout << "Rodando evento número: "<< fEventNumber << ". Dados: " << particle << " "  << PostVolName << " " << kinEnergy << endl;
+   		
 
    	}
 
@@ -139,11 +138,8 @@ void Filtro_SteppingAction::UserSteppingAction (const G4Step* aStep) {
         analysisManager->FillNtupleDColumn(1,9,direction_z);
         analysisManager->AddNtupleRow(1);
         
-        if ((fEventNumber%10000 == 0 && fEventNumber > 9999) ||  fEventNumber == 0)
-        {
-            cout << "Rodando evento número: "<< fEventNumber << ". Dados: " << particle << " "  << PostVolName << " " << kinEnergy << endl;
-        }
 
+       cout << "Rodando evento número: "<< fEventNumber << ". Dados: " << particle << " "  << PostVolName << " " << kinEnergy << endl;
     }
 
 

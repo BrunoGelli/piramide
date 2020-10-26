@@ -66,9 +66,9 @@ Filtro_DetectorConstruction::Filtro_DetectorConstruction (G4double RIndex)
     base_z       = 6 * m * 0.5;   
 
     // Detector
-    detector_x       = 40 * cm * 0.5;
-    detector_y       = 40 * cm * 0.5;
-    detector_z       = 02 * cm * 0.5;
+    detector_x       = 40.0 * cm * 0.5;
+    detector_y       = 40.0 * cm * 0.5;
+    detector_z       = 00.1 * cm * 0.5;
 
 
     // Detector
@@ -162,7 +162,7 @@ G4VPhysicalVolume* Filtro_DetectorConstruction::DefineVolumes() {
    
     G4LogicalVolume*    detector1_LV     =   new G4LogicalVolume (detector1, CONCRETE, "detector1_LV");
 
-    new G4PVPlacement (NULL,  pos_detector1, detector1_LV, "detector_LV",  base_LV, true, 0, fCheckOverlaps);
+    new G4PVPlacement (NULL,  pos_detector1, detector1_LV, "detector1_LV",  base_LV, true, 0, fCheckOverlaps);
 
 
     G4Box*              detector2        =   new G4Box("detector2", detector_x, detector_y, detector_z); 

@@ -99,7 +99,7 @@ void gerador()
 {
     srand(1115529);
 
-    long int size = 100000;
+    long int size = 550000;
 
     setstyle();
 
@@ -168,13 +168,13 @@ void MakeTable()
 
     double raio  = 100.0;
 
-    double xrand = rand() % 30000 - 15000;
-    double yrand = rand() % 30000 - 15000;
-    double zrand = rand() % 30000 - 15000;
+    double xrand = 0;//rand() % 30000 - 15000;
+    double yrand = 0;//rand() % 30000 - 15000;
+    double zrand = -33;//rand() % 30000 - 15000;
 
-    xrand = xrand / 15000;
-    yrand = yrand / 15000;
-    zrand = -32 + zrand / 15000;
+    // xrand = xrand / 15000;
+    // yrand = yrand / 15000;
+    // zrand = -32 + zrand / 15000;
 
 
     XrandVec.push_back(raio*sin(Zenith)*cos(theta)  + xrand); 
@@ -195,7 +195,7 @@ void MakeTable()
     double  Energy = 0;
 
 
-    while(Energy < 6)
+    while(Energy < 16)
     {
         double  EnergySelector  = (rand() % 10000000) ;
 

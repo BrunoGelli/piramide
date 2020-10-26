@@ -200,7 +200,7 @@ void signal()
 	
 	for (int i = 0; i < number_of_bins; ++i)
 	{
-		TH1D *h = new TH1D(Form("histogram of detected energy for the bin number %d", i), Form("histogram of detected energy for the bin number %d", i), 100, -5, 20); 
+		TH1D *h = new TH1D(Form("histogram of detected energy for the bin number %d", i), Form("histogram of detected energy for the bin number %d", i), 100, -5, 100); 
 
 		h->GetXaxis()->SetTitle("Energy (GeV)");
 		h->GetYaxis()->SetTitle("entries");
@@ -214,7 +214,7 @@ void signal()
 	{
 		bin = Frente->FindBin(dataX[i],dataY[i]);
 		EnergyDist[bin]->Fill(dataE[i]);
-		EnergyDist[bin]->SetMaximum(150);
+		// EnergyDist[bin]->SetMaximum(150);
 	}
 // 
 	Frente->Reset("ICES");
@@ -256,6 +256,12 @@ void signal()
 	Frente->GetZaxis()->SetTitleOffset(1);
 	Frente->SetLineWidth(1);
 	Frente->Draw("colz");
+
+	C_Frente->Update();
+
+	Frente->SetHighlight();
+	C_Frente->HighlightConnect("Highlight2(TVirtualPad*,TObject*,Int_t,Int_t)");
+
 
 
 

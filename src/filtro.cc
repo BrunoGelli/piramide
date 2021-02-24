@@ -40,7 +40,7 @@ int main(int argc,char** argv) {
     }
 
     G4MTRunManager* runManager = new G4MTRunManager;
-    runManager->SetNumberOfThreads(7);
+    runManager->SetNumberOfThreads(12);
     runManager->SetVerboseLevel(0);
 
     Filtro_DetectorConstruction* detConstruction = new Filtro_DetectorConstruction(RIndex);

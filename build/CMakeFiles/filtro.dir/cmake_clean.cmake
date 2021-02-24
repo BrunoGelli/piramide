@@ -7,8 +7,8 @@ file(REMOVE_RECURSE
   "CMakeFiles/filtro.dir/src/Filtro_PrimaryGeneratorAction.cc.o"
   "CMakeFiles/filtro.dir/src/Filtro_RunAction.cc.o"
   "CMakeFiles/filtro.dir/src/Filtro_SteppingAction.cc.o"
-  "filtro.pdb"
   "filtro"
+  "filtro.pdb"
 )
 
 # Per-language clean rules from dependency scanning.

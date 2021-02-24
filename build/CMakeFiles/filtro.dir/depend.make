@@ -1892,7 +1892,6 @@ CMakeFiles/filtro.dir/src/Filtro_PrimaryGeneratorAction.cc.o: /home/ladep/Geant4
 CMakeFiles/filtro.dir/src/Filtro_PrimaryGeneratorAction.cc.o: /home/ladep/Geant4/geant4_install/include/PTL/Utility.hh
 CMakeFiles/filtro.dir/src/Filtro_PrimaryGeneratorAction.cc.o: /media/ladep/HD/Codigos-Geant4/piramide/src/include/Filtro_Constantes.hh
 CMakeFiles/filtro.dir/src/Filtro_PrimaryGeneratorAction.cc.o: /media/ladep/HD/Codigos-Geant4/piramide/src/include/Filtro_PrimaryGeneratorAction.hh
-CMakeFiles/filtro.dir/src/Filtro_PrimaryGeneratorAction.cc.o: /media/ladep/HD/Codigos-Geant4/piramide/src/include/lookup.hh
 CMakeFiles/filtro.dir/src/Filtro_PrimaryGeneratorAction.cc.o: /media/ladep/HD/Codigos-Geant4/piramide/src/src/Filtro_PrimaryGeneratorAction.cc
 
 CMakeFiles/filtro.dir/src/Filtro_RunAction.cc.o: /home/ladep/Geant4/geant4_install/include/Geant4/CLHEP/Geometry/BasicVector3D.h

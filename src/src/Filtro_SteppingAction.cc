@@ -71,11 +71,11 @@ void Filtro_SteppingAction::UserSteppingAction (const G4Step* aStep) {
     G4AnalysisManager* analysisManager = G4AnalysisManager::Instance();
     
     //	PreStep Info
-    // 	G4StepPoint 		*aPrePoint 	= aStep->GetPreStepPoint();
-    // 	G4VPhysicalVolume 	*aPrePV 	= aPrePoint->GetPhysicalVolume();
-    // 	G4String 			PreVolName	= "";
+	G4StepPoint 		*aPrePoint 	= aStep->GetPreStepPoint();
+	G4VPhysicalVolume 	*aPrePV 	= aPrePoint->GetPhysicalVolume();
+	G4String 			PreVolName	= "";
 
-    // 	if (aPrePV) PreVolName = aPrePV->GetName();
+	if (aPrePV) PreVolName = aPrePV->GetName();
     
     //	Getting the information from the poststep Info
 
@@ -93,7 +93,7 @@ void Filtro_SteppingAction::UserSteppingAction (const G4Step* aStep) {
     // 		G4TrackStatus 			 ultimo 		 = aStep->GetTrack()->GetTrackStatus();
 
 
- 	if (particle == "e-" || particle == "e+" || particle == "gamma")
+ 	if (particle != "mu-" && particle != "mu+")
  	{
 		track->SetTrackStatus(fStopAndKill);
  	}
@@ -104,7 +104,7 @@ void Filtro_SteppingAction::UserSteppingAction (const G4Step* aStep) {
     }
 
 
-   	if (particle == "mu-"   && (PostVolName == "detector1_LV" || PostVolName == "detector2_LV" || PostVolName == "detector3_LV" ))
+   	if (particle == "mu-"  && PreVolName == "base_LV" && (PostVolName == "detector1_LV" || PostVolName == "detector2_LV" || PostVolName == "detector3_LV" )) //mu-
    	{
 		analysisManager->FillNtupleIColumn(1,0,fEventNumber);
 		analysisManager->FillNtupleDColumn(1,1,step_x/m);
@@ -124,7 +124,7 @@ void Filtro_SteppingAction::UserSteppingAction (const G4Step* aStep) {
 
    	}
 
-    if (particle == "mu+" && (PostVolName == "detector1_LV" || PostVolName == "detector2_LV" || PostVolName == "detector3_LV" ))
+    if (particle == "mu+" && PreVolName == "base_LV" && (PostVolName == "detector1_LV" || PostVolName == "detector2_LV" || PostVolName == "detector3_LV" ))
     {
         analysisManager->FillNtupleIColumn(1,0,fEventNumber);
         analysisManager->FillNtupleDColumn(1,1,step_x/m);
@@ -143,7 +143,10 @@ void Filtro_SteppingAction::UserSteppingAction (const G4Step* aStep) {
     }
 
 
-
+    if (fEventNumber%1000 == 0)
+    {
+       cout << "Rodando evento número: "<< fEventNumber << ". Dados: " << particle << " "  << kinEnergy << endl;
+    }
 }
 
 //================================================================================

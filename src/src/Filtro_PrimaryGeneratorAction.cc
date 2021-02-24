@@ -1,8 +1,6 @@
 #include "Filtro_PrimaryGeneratorAction.hh"
 #include "Filtro_Constantes.hh"
 
-#include "lookup.hh"
-
 #include "Randomize.hh"
 #include <G4INCLThreeVector.hh>
 
@@ -73,9 +71,16 @@ void Filtro_PrimaryGeneratorAction::GeneratePrimaries(G4Event* anEvent) {
 
     double raio  = 100.0;
 
-    double xrand = 0;//rand() % 30000 - 15000;
-    double yrand = 0;//rand() % 30000 - 15000;
-    double zrand = -33;//rand() % 30000 - 15000;
+    int offset = 200;
+    int compensator = offset/2;
+
+    double xrand = rand() % offset;
+    double yrand = rand() % offset;
+    double zrand = rand() % offset;
+
+    xrand = (xrand - compensator)/compensator +   0;
+    yrand = (yrand - compensator)/compensator +   0;
+    zrand = (zrand - compensator)/compensator + -33;
 
     double mod =    pow(raio*sin(Zenith)*cos(theta) , 2) + 
                     pow(raio*sin(Zenith)*sin(theta) , 2) + 
@@ -87,8 +92,8 @@ void Filtro_PrimaryGeneratorAction::GeneratePrimaries(G4Event* anEvent) {
     double  Energy = 0;
 
 
-    while(Energy < 16)
-    {
+    // while(Energy < 16)
+    // {
         double  EnergySelector  = (rand() % 10000000) ;
 
         for (int i = 1; i < 16; ++i)
@@ -100,7 +105,7 @@ void Filtro_PrimaryGeneratorAction::GeneratePrimaries(G4Event* anEvent) {
             }
         }
        
-    }
+    // }
 
 
     G4ParticleTable* particleTable = G4ParticleTable::GetParticleTable();
@@ -114,7 +119,7 @@ void Filtro_PrimaryGeneratorAction::GeneratePrimaries(G4Event* anEvent) {
 
     if (chargeSelector > 45.45)
     {
-        particleGun->SetParticleDefinition(particleTable->FindParticle("mu-"));
+        particleGun->SetParticleDefinition(particleTable->FindParticle("mu-")); //mu-
     }
     else 
     {

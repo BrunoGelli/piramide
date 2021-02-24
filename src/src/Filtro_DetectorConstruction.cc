@@ -148,7 +148,7 @@ G4VPhysicalVolume* Filtro_DetectorConstruction::DefineVolumes() {
 
     G4Box*              base            =   new G4Box("base", base_x, base_y, base_z); 
    
-    G4LogicalVolume*    base_LV         =   new G4LogicalVolume (base, CONCRETE, "detector_LV");
+    G4LogicalVolume*    base_LV         =   new G4LogicalVolume (base, CONCRETE, "base_LV");
 
     new G4PVPlacement (NULL,  pos_base, base_LV, "base_LV",  world_LV, true, 0, fCheckOverlaps);
 

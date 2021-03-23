@@ -119,11 +119,11 @@ void Filtro_PrimaryGeneratorAction::GeneratePrimaries(G4Event* anEvent) {
 
     if (chargeSelector > 45.45)
     {
-        particleGun->SetParticleDefinition(particleTable->FindParticle("mu-")); //mu-
+        particleGun->SetParticleDefinition(particleTable->FindParticle("geantino")); //mu-
     }
     else 
     {
-        particleGun->SetParticleDefinition(particleTable->FindParticle("mu+"));
+        particleGun->SetParticleDefinition(particleTable->FindParticle("geantino"));
     }
 
 

@@ -93,10 +93,10 @@ void Filtro_SteppingAction::UserSteppingAction (const G4Step* aStep) {
     // 		G4TrackStatus 			 ultimo 		 = aStep->GetTrack()->GetTrackStatus();
 
 
- 	if (particle != "mu-" && particle != "mu+")
- 	{
-		track->SetTrackStatus(fStopAndKill);
- 	}
+ 	// if (particle != "mu-" && particle != "mu+")
+ 	// {
+		// track->SetTrackStatus(fStopAndKill);
+ 	// }
     
     if (PostVolName == "fim_da_linha_LV")
     {
@@ -104,7 +104,7 @@ void Filtro_SteppingAction::UserSteppingAction (const G4Step* aStep) {
     }
 
 
-   	if (particle == "mu-"  && PreVolName == "base_LV" && (PostVolName == "detector1_LV" || PostVolName == "detector2_LV" || PostVolName == "detector3_LV" )) //mu-
+   	if (particle == "geantino"  && PreVolName == "base_LV" && (PostVolName == "detector1_LV" || PostVolName == "detector2_LV" || PostVolName == "detector3_LV" )) //mu-
    	{
 		analysisManager->FillNtupleIColumn(1,0,fEventNumber);
 		analysisManager->FillNtupleDColumn(1,1,step_x/m);
@@ -124,26 +124,26 @@ void Filtro_SteppingAction::UserSteppingAction (const G4Step* aStep) {
 
    	}
 
-    if (particle == "mu+" && PreVolName == "base_LV" && (PostVolName == "detector1_LV" || PostVolName == "detector2_LV" || PostVolName == "detector3_LV" ))
-    {
-        analysisManager->FillNtupleIColumn(1,0,fEventNumber);
-        analysisManager->FillNtupleDColumn(1,1,step_x/m);
-        analysisManager->FillNtupleDColumn(1,2,step_y/m);
-        analysisManager->FillNtupleDColumn(1,3,step_z/m);
-        analysisManager->FillNtupleDColumn(1,4,track->GetGlobalTime()/ns);
-        analysisManager->FillNtupleDColumn(1,5,kinEnergy/GeV);
-        analysisManager->FillNtupleDColumn(1,6,acos(CosAngle)*180/3.1415);
-        analysisManager->FillNtupleDColumn(1,7,direction_x);
-        analysisManager->FillNtupleDColumn(1,8,direction_y);
-        analysisManager->FillNtupleDColumn(1,9,direction_z);
-        analysisManager->AddNtupleRow(1);
+    // if (particle == "mu+" && PreVolName == "base_LV" && (PostVolName == "detector1_LV" || PostVolName == "detector2_LV" || PostVolName == "detector3_LV" ))
+    // {
+    //     analysisManager->FillNtupleIColumn(1,0,fEventNumber);
+    //     analysisManager->FillNtupleDColumn(1,1,step_x/m);
+    //     analysisManager->FillNtupleDColumn(1,2,step_y/m);
+    //     analysisManager->FillNtupleDColumn(1,3,step_z/m);
+    //     analysisManager->FillNtupleDColumn(1,4,track->GetGlobalTime()/ns);
+    //     analysisManager->FillNtupleDColumn(1,5,kinEnergy/GeV);
+    //     analysisManager->FillNtupleDColumn(1,6,acos(CosAngle)*180/3.1415);
+    //     analysisManager->FillNtupleDColumn(1,7,direction_x);
+    //     analysisManager->FillNtupleDColumn(1,8,direction_y);
+    //     analysisManager->FillNtupleDColumn(1,9,direction_z);
+    //     analysisManager->AddNtupleRow(1);
         
 
-       // cout << "Rodando evento número: "<< fEventNumber << ". Dados: " << particle << " "  << PostVolName << " " << kinEnergy << endl;
-    }
+    //    // cout << "Rodando evento número: "<< fEventNumber << ". Dados: " << particle << " "  << PostVolName << " " << kinEnergy << endl;
+    // }
 
 
-    if (fEventNumber%1000 == 0)
+    if (fEventNumber%100000 == 0)
     {
        cout << "Rodando evento número: "<< fEventNumber << ". Dados: " << particle << " "  << kinEnergy << endl;
     }

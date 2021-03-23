@@ -1,8 +1,8 @@
-/media/ladep/HD/Codigos-Geant4/piramide/build/CMakeFiles/install/strip.dir
-/media/ladep/HD/Codigos-Geant4/piramide/build/CMakeFiles/install/local.dir
-/media/ladep/HD/Codigos-Geant4/piramide/build/CMakeFiles/install.dir
-/media/ladep/HD/Codigos-Geant4/piramide/build/CMakeFiles/list_install_components.dir
-/media/ladep/HD/Codigos-Geant4/piramide/build/CMakeFiles/rebuild_cache.dir
-/media/ladep/HD/Codigos-Geant4/piramide/build/CMakeFiles/edit_cache.dir
-/media/ladep/HD/Codigos-Geant4/piramide/build/CMakeFiles/Filtro.dir
-/media/ladep/HD/Codigos-Geant4/piramide/build/CMakeFiles/filtro.dir
+/home/theoden/geant_codigos/piramide/piramide/build/CMakeFiles/install/strip.dir
+/home/theoden/geant_codigos/piramide/piramide/build/CMakeFiles/install/local.dir
+/home/theoden/geant_codigos/piramide/piramide/build/CMakeFiles/Filtro.dir
+/home/theoden/geant_codigos/piramide/piramide/build/CMakeFiles/filtro.dir
+/home/theoden/geant_codigos/piramide/piramide/build/CMakeFiles/list_install_components.dir
+/home/theoden/geant_codigos/piramide/piramide/build/CMakeFiles/edit_cache.dir
+/home/theoden/geant_codigos/piramide/piramide/build/CMakeFiles/rebuild_cache.dir
+/home/theoden/geant_codigos/piramide/piramide/build/CMakeFiles/install.dir
